@@ -17,14 +17,13 @@ export default class App extends Component {
     this.setState(
       {tabuleiro: Jogo.tabuleiro, 
        mensagem:  Jogo.mensagem})
-       console.log(' iniciar ' + this.state.mensagem);
   }
 
   jogar(index){
-    console.log('app- jogar - mensagem esta:' + this.state.mensagem);
     Jogo.jogar(index)
     this.setState({tabuleiro: Jogo.tabuleiro, 
                    mensagem:  Jogo.mensagem})
+  console.log('pos jogar ' + this.state.mensagem );
   }
 
   render(){

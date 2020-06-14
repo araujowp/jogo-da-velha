@@ -8,10 +8,14 @@ export default {
     jogador: 'X',
     mensagem: 'Vez de: X', 
     acabou: false,
+    contador: 0,
     opcoes_vitoria: [
         [0,1,2],
         [3,4,5],
         [6,7,8],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
         [0,4,8],
         [6,4,2]
     ], 
@@ -19,7 +23,6 @@ export default {
     //funcões 
     jogar(posicao) {
 
-        console.log('jogar: '  + this.mensagem);
         if(this.acabou)
             return false;
 
@@ -27,30 +30,42 @@ export default {
             return false;
 
         this.tabuleiro[posicao] = this.jogador;
-        this.jogador = this.jogador == 'X' ? 'O' : 'X';
-
-        this.mensagem  = 'Vez de ' + this.jogador;
-
+        
         this.acabou = this.verificarVitoria();
+        
+        if(this.acabou) {
+            this.mensagem = this.jogador + ' Ganhou!!! ';
+            return false;
+        }
+        this.contador++;
+        
+        if (this.contador == 9){
+            this.acabou = true;
+            this.mensagem = 'Empate';
+            return false;
+        }
 
-        //if(this.acabou) 
-            //mensagem  = 'Fim de jogo';
+        this.jogador = this.jogador == 'X' ? 'O' : 'X';
+        this.mensagem  = 'Vez de ' + this.jogador;
 
         return true;
     },
     verificarVitoria(jogador){
+        
+        for (this.i in this.opcoes_vitoria){
+            if(this.tabuleiro[ this.opcoes_vitoria[this.i][0] ] == this.jogador &&
+               this.tabuleiro[ this.opcoes_vitoria[this.i][1] ] == this.jogador && 
+               this.tabuleiro[ this.opcoes_vitoria[this.i][2] ] == this.jogador){
+                return true;
+            }
+        }
 
-/*        for (i in this.opcoes_vitoria){
-            //if(this.tabuleiro[this.opcoes_vitoria[i][0]] == jogador )
-              //  return true;
-              console.log('i igual a ' + i);
-        }*/
         return false;
     },
     iniciar(){
         this.tabuleiro.fill('');
         this.mensagem  = 'Vez de ' + this.jogador;
-        console.log('jogo - iniciar - this.jogador ' + this.jogador);
+        this.acabou = false;
         return true;
     }
 }
